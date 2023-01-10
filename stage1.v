@@ -1,8 +1,8 @@
 module f(input [31:0] x,y,z, output reg [31:0] out);
-always@(*)
-begin
-    out <= (x && y) || (!x && z);
-end
+    always @(x or y or z)
+    begin
+        out = (x && y) || (!x && z);
+    end
 endmodule
 
 module function_1(a,b,c,d,s,k,out);
@@ -16,16 +16,13 @@ reg [31:0] temp_2;
 integer y;
 f f_1 (b,c,d,f_out);
 
-always@(*)
+always@(f_out)
 begin
-    temp <= (a + f_out + k);
-    temp_2 <= temp;
-    temp_2[0] <= temp[31];
-    for(y=0;y<31;y++)
+    if(f_out == 1)
     begin
-        temp_2[y+1] <= temp[y];
+    temp = (a + f_out + k);
+    out = temp;
     end
-    out <= temp_2;
 end
 endmodule
 
@@ -37,7 +34,6 @@ wire [31:0] a_1,a_2,a_3,a_4;
 wire [31:0] b_1,b_2,b_3,b_4;
 wire [31:0] c_1,c_2,c_3,c_4;
 wire [31:0] d_1,d_2,d_3,d_4;
-reg [31:0] a_in,b_in,c_in,d_in;
 
 function_1 f1(a,b,c,d,3,x[31:0],a_1);
 function_1 f2(d,a_1,b,c,7,x[63:32],d_1);
@@ -73,13 +69,13 @@ reg [511:0] M;
 stage1 s1(a,b,c,d,M,res_a,res_b,res_c,res_d);
 initial
 begin
-a <= 32'h67453201;
-b <= 32'hefcdab89;
-c <= 32'h98badcfe;
-d <= 32'h10325476;
-M <= 512'h41686D61642055726162698000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000059;
+#1 a = 32'h67453201;
+#1 b = 32'hefcdab89;
+#1 c = 32'h98badcfe;
+#1 d = 32'h10325476;
+#1 M = 512'h41686D61642055726162698000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000059;
 
-#20 $display("Hello %b %h %h %h", res_a,res_b,res_c,res_d);
-
+#1 $display("Hello %b %h %h %h", res_a,res_b,res_c,res_d);
+$finish;
 end
 endmodule
