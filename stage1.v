@@ -1,5 +1,5 @@
 module f(input [31:0] x,y,z, output reg [31:0] out);
-    always @(x or y or z)
+    always @(x && y && z)
     begin
         out = (x && y) || (!x && z);
     end
@@ -16,12 +16,12 @@ reg [31:0] temp_2;
 integer y;
 f f_1 (b,c,d,f_out);
 
-always@(f_out)
+always@(a && b && c && d && s && k && f_out)
 begin
-    if(f_out == 1)
+    if(f_out == 1 || f_out == 0)
     begin
     temp = (a + f_out + k);
-    out = temp;
+    out <= temp;
     end
 end
 endmodule
@@ -52,8 +52,9 @@ function_1 f14(d_3,a_4,b_3,c_3,7,x[447:416],d_4);
 function_1 f15(c_3,d_4,a_4,b_3,11,x[479:448],c_4);
 function_1 f16(b_3,c_4,d_4,a_4,19,x[511:480],b_4);
 
-always@(*)
+always@(a && b && c && d)
 begin
+    $display("%b %b %b %b",a_1,b_1,c_1,d_1);
     out_a = a_4;
     out_b = b_4;
     out_c = c_4;
