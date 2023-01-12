@@ -21,13 +21,16 @@ end
 endmodule
 
 module f(input [31:0] x,y,z, output [31:0] out);
-        assign out = (x && y) || (~x && z);
+        assign out = (x & y) | (~x & z);
 endmodule
 
 module G(input [31:0] x,y,z, output [31:0] out);
-        assign out = (x && y) || (x && z) || (y && z);
+        assign out = (x & y) | (x & z) | (y & z);
 endmodule
 
+module H(input [31:0] x,y,z, output [31:0] out);
+        assign out = (x ^ y ^ z);
+endmodule
 
 module function_1(a,b,c,d,s,k,out);
 input [31:0]a,b,c,d;
@@ -49,9 +52,7 @@ begin
 end
 endmodule
 
-module H(input [31:0] x,y,z, output [31:0] out);
-        assign out = (x && y) || (x && z) || (y && z);
-endmodule
+
 
 module function_2(a,b,c,d,s,k,out);
 input [31:0]a,b,c,d;
