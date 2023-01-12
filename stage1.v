@@ -40,7 +40,6 @@ assign temp = (a + f_out + k);
 csl cs(temp,s,csl_out);
 always @(csl_out)
 begin
-    $display("%b %b", temp, csl_out);
     out = csl_out;
 end
 endmodule
@@ -87,13 +86,13 @@ reg clk;
 stage1 s1(a,b,c,d,M,res_a,res_b,res_c,res_d,clk);
 initial
 begin
-#1 a = 32'h67453201;
-#1 b = 32'hefcdab89;
-#1 c = 32'h98badcfe;
-#1 d = 32'h10325476;
-#1 M = 512'h41686D61642055726162698000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000059;
-
-#1 $display("Hello %b %h %h %h", res_a,res_b,res_c,res_d);
+#1 a <= 32'h67453201;
+#1 b <= 32'hefcdab89;
+#1 c <= 32'h98badcfe;
+#1 d <= 32'h10325476;
+#1 M <= 512'h41686D61642055726162698000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000059;
+#1 $display("Before Stage 1: a = %h, b = %h, c = %h, d = %h", a,b,c,d);
+#1 $display("After Stage 1: a = %h, b = %h, c = %h, d = %h", res_a,res_b,res_c,res_d);
 $finish;
 end
 endmodule
