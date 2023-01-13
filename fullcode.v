@@ -67,7 +67,7 @@ reg [31:0] extra;
 integer y;
 integer x;
 G G_1 (b,c,d,G_out);
-assign temp = (a + G_out + k + 32'h9979825A);
+assign temp = (a + G_out + k + 32'h5A827999);
 csl cs(temp,s,csl_out);
 always @(csl_out)
 begin
@@ -75,38 +75,7 @@ begin
 end
 endmodule
 
-module stage2(a,b,c,d,x,out_a, out_b, out_c, out_d,clk);
-input [31:0] a,b,c,d;
-input [511:0] x;
-input clk;
-output [31:0] out_a, out_b, out_c, out_d;
-wire [31:0] a_1,a_2,a_3,a_4;
-wire [31:0] b_1,b_2,b_3,b_4;
-wire [31:0] c_1,c_2,c_3,c_4;
-wire [31:0] d_1,d_2,d_3,d_4;
 
-function_2 f1(a,b,c,d,3,x[31:0],a_1);
-function_2 f2(d,a_1,b,c,5,x[159:128],d_1);
-function_2 f3(c,d_1,a_1,b,9,x[287:256],c_1);
-function_2 f4(b,c_1,d_1,a_1,16,x[415:384],b_1);
-function_2 f5(a_1,b_1,c_1,d_1,3,x[63:32],a_2);
-function_2 f6(d_1,a_2,b_1,c_1,8,x[191:160],d_2);
-function_2 f7(c_1,d_2,a_2,b_1,9,x[319:288],c_2);
-function_2 f8(b_1,c_2,d_2,a_2,13,x[447:416],b_2);
-function_2 f9(a_2,b_2,c_2,d_2,3,x[95:64],a_3);
-function_2 f10(d_2,a_3,b_2,c_2,5,x[223:192],d_3);
-function_2 f11(c_2,d_3,a_3,b_2,9,x[351:320],c_3);
-function_2 f12(b_2,c_3,d_3,a_3,13,x[479:448],b_3);
-function_2 f13(a_3,b_3,c_3,d_3,3,x[127:96],a_4);
-function_2 f14(d_3,a_4,b_3,c_3,5,x[255:224],d_4);
-function_2 f15(c_3,d_4,a_4,b_3,9,x[383:352],c_4);
-function_2 f16(b_3,c_4,d_4,a_4,13,x[511:480],b_4);
-
-assign out_a = a_4;
-assign out_b = b_4;
-assign out_c = c_4;
-assign out_d = d_4;
-endmodule
 
 module function_3(a,b,c,d,s,k,out);
 input [31:0]a,b,c,d;
@@ -120,7 +89,7 @@ reg [31:0] temp_2;
 integer y;
 integer x;
 H H_1 (b,c,d,H_out);
-assign temp = (a + H_out + k + 32'hA1EBD96E);
+assign temp = (a + H_out + k + 32'h6ED9EBA1);
 csl cs(temp,s,csl_out);
 always @(csl_out)
 begin
@@ -154,6 +123,40 @@ function_1 f13(a_3,b_3,c_3,d_3,3,x[415:384],a_4);
 function_1 f14(d_3,a_4,b_3,c_3,7,x[447:416],d_4);
 function_1 f15(c_3,d_4,a_4,b_3,11,x[479:448],c_4);
 function_1 f16(b_3,c_4,d_4,a_4,19,x[511:480],b_4);
+
+assign out_a = a_4;
+assign out_b = b_4;
+assign out_c = c_4;
+assign out_d = d_4;
+endmodule
+
+module stage2(a,b,c,d,x,out_a, out_b, out_c, out_d,clk);
+input [31:0] a,b,c,d;
+input [511:0] x;
+input clk;
+output [31:0] out_a, out_b, out_c, out_d;
+wire [31:0] a_1,a_2,a_3,a_4;
+wire [31:0] b_1,b_2,b_3,b_4;
+wire [31:0] c_1,c_2,c_3,c_4;
+wire [31:0] d_1,d_2,d_3,d_4;
+
+function_2 f1(a,b,c,d,3,x[31:0],a_1);
+function_2 f2(d,a_1,b,c,5,x[159:128],d_1);
+function_2 f3(c,d_1,a_1,b,9,x[287:256],c_1);
+function_2 f4(b,c_1,d_1,a_1,13,x[415:384],b_1);
+function_2 f5(a_1,b_1,c_1,d_1,3,x[63:32],a_2);
+function_2 f6(d_1,a_2,b_1,c_1,5,x[191:160],d_2);
+function_2 f7(c_1,d_2,a_2,b_1,9,x[319:288],c_2);
+function_2 f8(b_1,c_2,d_2,a_2,13,x[447:416],b_2);
+function_2 f9(a_2,b_2,c_2,d_2,3,x[95:64],a_3);
+function_2 f10(d_2,a_3,b_2,c_2,5,x[223:192],d_3);
+function_2 f11(c_2,d_3,a_3,b_2,9,x[351:320],c_3);
+function_2 f12(b_2,c_3,d_3,a_3,13,x[479:448],b_3);
+function_2 f13(a_3,b_3,c_3,d_3,3,x[127:96],a_4);
+function_2 f14(d_3,a_4,b_3,c_3,5,x[255:224],d_4);
+function_2 f15(c_3,d_4,a_4,b_3,9,x[383:352],c_4);
+function_2 f16(b_3,c_4,d_4,a_4,13,x[511:480],b_4);
+
 
 assign out_a = a_4;
 assign out_b = b_4;
@@ -221,11 +224,11 @@ stage3 s3(res_a_2,res_b_2,res_c_2,res_d_2,M,res_a,res_b,res_c,res_d,clk);
 assemble ab(res_a,res_b,res_c,res_d,a,b,c,d,result);
 initial
 begin
-a <= 32'h01324567;
-b <= 32'h89abcdef;
-c <= 32'hfedcba98;
-d <= 32'h76543210;
- M <= 512'h41686D61648000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000028;
+ a <= 32'h67452301;
+ b <= 32'hefcdab89;
+ c <= 32'h98badcfe;
+ d <= 32'h10325476;
+ M <= 512'b01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001;
 #10 $display("Before: a = %h, b = %h, c = %h, d = %h", a,b,c,d);
 #10 $display("After : a = %h, b = %h, c = %h, d = %h", res_a,res_b,res_c,res_d);
 
