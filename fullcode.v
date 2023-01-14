@@ -201,29 +201,36 @@ assign res_d = d + org_d;
 assign out = {res_d,res_c,res_b,res_a};
 endmodule
 
-module full_tb();
+module md4(Message, Digest);
+input [511:0] Message;
+output [127:0] Digest;
 reg  [31:0] a,b,c,d;
 wire [31:0] res_a, res_b, res_c, res_d;
 wire [31:0] res_a_1, res_b_1, res_c_1, res_d_1;
 wire [31:0] res_a_2, res_b_2, res_c_2, res_d_2;
 wire [127:0] result;
-reg  [511:0] M;
-stage1 s1(a,b,c,d,M,res_a_1,res_b_1,res_c_1,res_d_1);
-stage2 s2(res_a_1,res_b_1,res_c_1,res_d_1,M,res_a_2,res_b_2,res_c_2,res_d_2);
-stage3 s3(res_a_2,res_b_2,res_c_2,res_d_2,M,res_a,res_b,res_c,res_d);
-assemble ab(res_a,res_b,res_c,res_d,a,b,c,d,result);
+stage1 s1(a,b,c,d,Message,res_a_1,res_b_1,res_c_1,res_d_1);
+stage2 s2(res_a_1,res_b_1,res_c_1,res_d_1,Message,res_a_2,res_b_2,res_c_2,res_d_2);
+stage3 s3(res_a_2,res_b_2,res_c_2,res_d_2,Message,res_a,res_b,res_c,res_d);
+assemble ab(res_a,res_b,res_c,res_d,a,b,c,d,Digest);
 initial
 begin
- a <= 32'h67452301;
- b <= 32'hefcdab89;
- c <= 32'h98badcfe;
- d <= 32'h10325476;
- M <= 512'b01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001;
-#10 $display("Init: a = %h, b = %h, c = %h, d = %h", a,b,c,d);
+    a <= 32'h67452301;
+    b <= 32'hefcdab89;
+    c <= 32'h98badcfe;
+    d <= 32'h10325476;
+end
+endmodule
+
+module full_tb();
+wire [127:0] result;
+reg  [511:0] M;
+md4 m1(M,result);
+initial
+begin
+ M <= 512'h50535554800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020;
 #10 $display("Original Message: %h", M);
-
-
-#1000 $display("Result : %h", result);
+#10 $display("Result : %h", result);
 $finish;
 end
 endmodule
