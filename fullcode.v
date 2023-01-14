@@ -213,7 +213,7 @@ stage1 s1(a,b,c,d,Message,res_a_1,res_b_1,res_c_1,res_d_1);
 stage2 s2(res_a_1,res_b_1,res_c_1,res_d_1,Message,res_a_2,res_b_2,res_c_2,res_d_2);
 stage3 s3(res_a_2,res_b_2,res_c_2,res_d_2,Message,res_a,res_b,res_c,res_d);
 assemble ab(res_a,res_b,res_c,res_d,a,b,c,d,Digest);
-initial
+always @(Message)
 begin
     a <= 32'h67452301;
     b <= 32'hefcdab89;
